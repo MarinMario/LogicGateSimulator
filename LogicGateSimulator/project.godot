@@ -38,4 +38,5 @@ right_click={
 
 [rendering]
 
+environment/default_clear_color=Color( 0.34902, 0.545098, 0.266667, 1 )
 environment/default_environment="res://default_env.tres"

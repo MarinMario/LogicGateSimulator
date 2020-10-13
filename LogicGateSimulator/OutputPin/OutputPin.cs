@@ -7,7 +7,6 @@ public class OutputPin : Node2D, IPin
     public bool Value { get; set; }
     public IPin ConnectedPin { get; set; }
 
-
     public void OnPressed()
     {
         var manager = GetNode<Manager>("/root/Manager");
@@ -17,7 +16,14 @@ public class OutputPin : Node2D, IPin
             if (manager.lastInputPin == null)
                 manager.AddWire(this);
         }
-        
     }
 
+    public void Despawn()
+    {
+        if (ConnectedPin != null)
+        {
+            ConnectedPin.ConnectedPin = null;
+            ConnectedPin = null;
+        }
+    }
 }

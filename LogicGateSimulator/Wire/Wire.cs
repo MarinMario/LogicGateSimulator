@@ -19,9 +19,8 @@ public class Wire : Node2D
 
     public override void _Process(float delta)
     {
-
         var delete = GetNode<Node2D>("Delete");
-        line.DefaultColor = pin.Value ? Color.ColorN("green") : Color.ColorN("red");
+        line.DefaultColor = pin.Value ? Color.ColorN("lightblue") : Color.ColorN("darkblue");
         if (pin.ConnectedPin != null)
         {
             line.Points = new Vector2[] { (pin as Node2D).GlobalPosition, (pin.ConnectedPin as Node2D).GlobalPosition };
@@ -42,13 +41,11 @@ public class Wire : Node2D
             manager.lastOutputPin = null;
             QueueFree();
         }
-
     }
 
     void OnDeletePressed()
     {
-        pin.ConnectedPin.ConnectedPin = null;
-        pin.ConnectedPin = null;
+        pin.Despawn();
         QueueFree();
     }
 }

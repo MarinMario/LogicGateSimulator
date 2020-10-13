@@ -41,3 +41,4 @@ position = Vector2( 292.302, 366.637 )
 
 [node name="Gate3" parent="Gates" instance=ExtResource( 3 )]
 position = Vector2( 374.71, 514.635 )
+type = 2

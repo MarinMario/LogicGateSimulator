@@ -26,4 +26,13 @@ public class InputPin : Node2D, IPin
                 manager.AddWire(this);
         }
     }
+
+    public void Despawn()
+    {
+        if (ConnectedPin != null)
+        {
+            ConnectedPin.ConnectedPin = null;
+            ConnectedPin = null;
+        }
+    }
 }

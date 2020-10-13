@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using Godot.Collections;
 
 public class Gate : Draggable
 {
@@ -7,33 +7,49 @@ public class Gate : Draggable
 
     [Export]
     Type type = Type.And;
-    InputPin inputPin1;
-    InputPin inputPin2;
     OutputPin outputPin;
 
     protected override void Ready()
     {
-        inputPin1 = GetNode<InputPin>("InputPin1");
-        inputPin2 = GetNode<InputPin>("InputPin2");
         outputPin = GetNode<OutputPin>("OutputPin");
         GetNode<Label>("Label").Text = type.ToString();
     }
 
     protected override void Process(float delta)
     {
-        var ip1 = inputPin1.Value;
-        var ip2 = inputPin2.Value;
+        var inputPins = GetNode("InputPins").GetChildren();
+        var output = false;
+        
         switch (type)
         {
             case Type.Or:
-                outputPin.Value = ip1 || ip2;
+                foreach (IPin pin in inputPins)
+                    output = output || pin.Value;
                 break;
             case Type.And:
-                outputPin.Value = ip1 && ip2;
+                output = true;
+                foreach (IPin pin in inputPins)
+                    output = output && pin.Value;
                 break;
             case Type.Not:
-                outputPin.Value = !ip1;
+                output = !(inputPins[0] as IPin).Value;
                 break;
         }
+
+        outputPin.Value = output;
+
+        if (mouseOver && Input.IsActionJustPressed("right_click"))
+        {
+            foreach (IPin pin in inputPins)
+                pin.Despawn();
+            outputPin.Despawn();
+            QueueFree();
+        }
+    }
+
+    void AddInputPin()
+    {
+        var pin = (InputPin)ResourceLoader.Load<PackedScene>("res://InputPin/InputPin.tscn").Instance();
+        GetNode<Node2D>("InputPins").AddChild(pin);
     }
 }

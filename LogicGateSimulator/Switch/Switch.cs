@@ -7,7 +7,6 @@ public class Switch : Draggable
 
     protected override void Ready()
     {
-
         outputPin = GetNode<OutputPin>("OutputPin");
     }
 
