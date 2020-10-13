@@ -1,41 +1,29 @@
 using Godot;
 using System;
 
-public class InputPin : Pin
+public class InputPin : Node2D, IPin
 {
-    public OutputPin connectedPin;
+    public bool Value { get; set; }
+    public IPin ConnectedPin { get; set; }
+    Manager manager;
 
-    protected override void Process(float delta)
+    public override void _Ready()
     {
-        value = connectedPin != null ? connectedPin.value : false;
-        var manager = GetNode<Manager>("/root/Manager");
-
-        if (Input.IsActionJustPressed("click") && mouseOver)
-            if (manager.lastInputPin == this)
-                manager.lastInputPin = null;
-            else
-                manager.lastInputPin = this;
-
-        if (manager.lastInputPin == this && manager.lastOutputPin != null)
-        {
-            connectedPin = manager.lastOutputPin;
-            manager.lastInputPin = null;
-            manager.lastOutputPin = null;
-        }
-
-        RunOnce();
+        manager = GetNode<Manager>("/root/Manager");
     }
 
-    bool ran = false;
-    void RunOnce()
+    public override void _Process(float delta)
     {
-        if (!ran)
-        {
-            var wire = (Wire)ResourceLoader.Load<PackedScene>("res://Wire/Wire.tscn").Instance();
-            wire.Init(this);
-            GetParent().GetParent().AddChild(wire);
+        Value = ConnectedPin != null ? ConnectedPin.Value : false;
+    }
 
-            ran = true;
+    public void OnPressed()
+    {
+        if (ConnectedPin == null && manager.lastInputPin == null)
+        {
+            manager.lastInputPin = this;
+            if (manager.lastOutputPin == null)
+                manager.AddWire(this);
         }
     }
 }

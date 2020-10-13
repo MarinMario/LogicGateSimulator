@@ -21,18 +21,18 @@ public class Gate : Draggable
 
     protected override void Process(float delta)
     {
-        var ip1 = inputPin1.value;
-        var ip2 = inputPin2.value;
+        var ip1 = inputPin1.Value;
+        var ip2 = inputPin2.Value;
         switch (type)
         {
             case Type.Or:
-                outputPin.value = ip1 || ip2;
+                outputPin.Value = ip1 || ip2;
                 break;
             case Type.And:
-                outputPin.value = ip1 && ip2;
+                outputPin.Value = ip1 && ip2;
                 break;
             case Type.Not:
-                outputPin.value = !ip1;
+                outputPin.Value = !ip1;
                 break;
         }
     }

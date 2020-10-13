@@ -3,7 +3,7 @@ using System;
 
 public class Wire : Node2D
 {
-    InputPin inputPin;
+    IPin pin;
     Line2D line;
 
     public override void _Ready()
@@ -12,17 +12,43 @@ public class Wire : Node2D
         line.GlobalPosition = new Vector2(0, 0);
     }
 
-    public void Init(InputPin inputPin)
+    public void Init(IPin pin)
     {
-        this.inputPin = inputPin;
+        this.pin = pin;
     }
+
     public override void _Process(float delta)
     {
-        if (inputPin.connectedPin != null)
+
+        var delete = GetNode<Node2D>("Delete");
+        line.DefaultColor = pin.Value ? Color.ColorN("green") : Color.ColorN("red");
+        if (pin.ConnectedPin != null)
         {
-            //GlobalPosition = inputPin.GlobalPosition;
-            line.Points = new Vector2[] { inputPin.GlobalPosition, inputPin.connectedPin.GlobalPosition };
-            line.DefaultColor = inputPin.value ? Color.ColorN("green") : Color.ColorN("red");
+            line.Points = new Vector2[] { (pin as Node2D).GlobalPosition, (pin.ConnectedPin as Node2D).GlobalPosition };
+
+            delete.GlobalPosition = line.Points[0] / 2 + line.Points[1] / 2;
+            delete.Visible = true;
         }
+        else
+        {
+            line.Points = new Vector2[] { (pin as Node2D).GlobalPosition, GetGlobalMousePosition() };
+            delete.Visible = false;
+        }
+
+        if (Input.IsActionJustPressed("right_click") && pin.ConnectedPin == null)
+        {
+            var manager = GetNode<Manager>("/root/Manager");
+            manager.lastInputPin = null;
+            manager.lastOutputPin = null;
+            QueueFree();
+        }
+
+    }
+
+    void OnDeletePressed()
+    {
+        pin.ConnectedPin.ConnectedPin = null;
+        pin.ConnectedPin = null;
+        QueueFree();
     }
 }

@@ -15,13 +15,13 @@ margin_top = -24.0
 margin_right = 24.0
 margin_bottom = 24.0
 mouse_filter = 2
-color = Color( 0, 1, 0, 1 )
+color = Color( 1, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OutputPin" parent="." instance=ExtResource( 2 )]
-position = Vector2( 40, 0 )
+position = Vector2( 48, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

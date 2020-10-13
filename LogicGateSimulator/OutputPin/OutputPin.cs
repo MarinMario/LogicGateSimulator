@@ -2,15 +2,22 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public class OutputPin : Pin
+public class OutputPin : Node2D, IPin
 {
-    protected override void Process(float delta)
+    public bool Value { get; set; }
+    public IPin ConnectedPin { get; set; }
+
+
+    public void OnPressed()
     {
         var manager = GetNode<Manager>("/root/Manager");
-        if (Input.IsActionJustPressed("click") && mouseOver)
-            if (manager.lastOutputPin == this)
-                manager.lastOutputPin = null;
-            else
-                manager.lastOutputPin = this;
+        if (ConnectedPin == null && manager.lastOutputPin == null)
+        {
+            manager.lastOutputPin = this;
+            if (manager.lastInputPin == null)
+                manager.AddWire(this);
+        }
+        
     }
+
 }

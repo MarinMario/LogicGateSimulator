@@ -3,10 +3,10 @@ using System;
 
 public class Light : Draggable
 {
-    public bool value = false;
+    public bool Value = false;
     protected override void Process(float delta)
     {
-        value = GetNode<InputPin>("InputPin").value;
-        GetNode<ColorRect>("ColorRect").Color = value ? Color.ColorN("white") : Color.ColorN("black");
+        Value = GetNode<InputPin>("InputPin").Value;
+        GetNode<ColorRect>("ColorRect").Color = Value ? Color.ColorN("white") : Color.ColorN("black");
     }
 }

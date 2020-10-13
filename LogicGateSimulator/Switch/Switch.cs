@@ -15,8 +15,8 @@ public class Switch : Draggable
     {
         if (Input.IsActionJustPressed("click") && mouseOver)
         {
-            outputPin.value = !outputPin.value;
-            GetNode<ColorRect>("ColorRect").Color = outputPin.value ? Color.ColorN("green") : Color.ColorN("red");
+            outputPin.Value = !outputPin.Value;
+            GetNode<ColorRect>("ColorRect").Color = outputPin.Value ? Color.ColorN("green") : Color.ColorN("red");
         }
     }
 }

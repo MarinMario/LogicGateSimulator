@@ -3,8 +3,33 @@
 [ext_resource path="res://Wire/Wire.cs" type="Script" id=3]
 
 [node name="Wire" type="Node2D"]
+z_index = -10
+z_as_relative = false
 script = ExtResource( 3 )
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 20.0
+
+[node name="Delete" type="Node2D" parent="."]
+
+[node name="TextureButton" type="TextureButton" parent="Delete"]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Delete/TextureButton"]
+margin_right = 32.0
+margin_bottom = 32.0
+mouse_filter = 2
+color = Color( 1, 1, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Delete/TextureButton" to="." method="OnDeletePressed"]

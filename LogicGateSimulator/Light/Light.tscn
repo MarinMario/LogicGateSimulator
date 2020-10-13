@@ -24,4 +24,4 @@ __meta__ = {
 }
 
 [node name="InputPin" parent="." instance=ExtResource( 2 )]
-position = Vector2( -40, 0 )
+position = Vector2( -48, 0 )
