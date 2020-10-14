@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Draggable/Draggable.cs" type="Script" id=1]
 
-[node name="Draggable" type="Area2D"]
+[node name="Draggable" type="Node2D"]
 script = ExtResource( 1 )
